@@ -1,7 +1,18 @@
+body {
+  background-image: url("pink-purple-weather.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 .App {
-  position: relative;
-  text-align: center;
-  scroll-margin-bottom: 20px;
+  max-width: 650px;
+  margin: 30px auto;
+}
+.App footer {
+  font-size: 12px;
+  margin: 10px 0;
+  color: white;
 }
 
 .App-logo {
@@ -19,8 +30,11 @@
 }
 
 .App-header {
+  border: 2px solid #f3e7c2;
+  border-radius: 6px;
+  font-family: sans-serif;
+  padding: 10px;
   background-color: plum;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;

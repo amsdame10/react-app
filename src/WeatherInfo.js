@@ -87,7 +87,7 @@ export default function WeatherInfo(props) {
                   <input
                     type="submit"
                     value="Search"
-                    className="btn btn-primary w-30"
+                    className="btn btn-bd-primary bi-balloon-heart"
                   />
                 </form>
               </div>
@@ -102,6 +102,6 @@ export default function WeatherInfo(props) {
     );
   } else {
     search();
-    return "Loading...";
+    return "Today is";
   }
 }

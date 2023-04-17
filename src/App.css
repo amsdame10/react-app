@@ -43,11 +43,11 @@ body {
   color: white;
 }
 .btn-bd-primary {
-  color: pink;
+  color: rgb(207, 140, 248);
 }
 
 .App-link {
-  color: pink;
+  color: rgb(190, 131, 245);
 }
 
 @keyframes App-logo-spin {

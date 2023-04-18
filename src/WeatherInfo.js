@@ -1,107 +1,37 @@
-import React, { useState } from "react";
+import React from "react";
 import FormattedDate from "./FormattedDate";
-import axios from "axios";
 import WeatherIcon from "./WeatherIcon";
 import WeatherTemperature from "./WeatherTemperature";
-import WeatherForecast from "./WeatherForecast";
+import "./WeatherInfo.css";
 
 export default function WeatherInfo(props) {
-  const [city, setCity] = useState(props.defaultCity);
-  const [weatherData, setWeatherData] = useState({ ready: false });
-
-  function displayForecast(response) {
-    setWeatherData({
-      city: response.data.name,
-      coordinates: response.data.coord,
-      icon: response.data.weather[0].icon,
-      temperature: Math.round(response.data.main.temp),
-      humidity: response.data.main.humidity,
-      description: response.data.weather[0].description,
-      wind: Math.round(response.data.wind.speed),
-      date: new Date(response.data.dt * 1000),
-      ready: true,
-    });
-  }
-
-  function search() {
-    let apiKey = "2d96d64425dca1d6eda00d942a281c0d";
-
-    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
-    axios.get(apiUrl).then(displayForecast);
-  }
-
-  function handleSubmit(event) {
-    event.preventDefault();
-    search();
-  }
-  function handleCityChange(event) {
-    setCity(event.target.value);
-  }
-  if (weatherData.ready) {
-    return (
-      <div className="WeatherInfo">
-        <div className="Weather">
-          <div className="weather-app">
-            <div className="row">
-              <div className="col-6">
-                <div className="clearfix weather-temperature">
-                  <WeatherIcon code={weatherData.icon} size={52} />
-                  <WeatherTemperature celsius={weatherData.temperature} />
-                </div>
-              </div>
-              <div className="col-6">
-                <ul>
-                  <li>
-                    Humidity: <span>{weatherData.humidity}</span>%
-                  </li>
-                  <li>
-                    Wind: <span>{weatherData.wind}</span> m/h
-                  </li>
-                </ul>
-              </div>
+  return (
+    <div className="WeatherInfo">
+      <div className="d-flex flex-row justify-content-between">
+        <div className="col-6">
+          <h1 className="City">{props.data.city}</h1>
+          <ul>
+            <li className="text-capitalize">
+              <FormattedDate date={props.data.date} /> {props.data.description}
+            </li>
+            <li>
+              Humidity: <span className="humidity">{props.data.humidity}%</span>{" "}
+              Wind: <span className="wind">{Math.round(props.data.wind)}</span>{" "}
+              mph
+            </li>
+          </ul>
+        </div>
+        <div className="col-6 justify-content-center">
+          <div className="temperature-container d-flex justify-content-end mt-5">
+            <div>
+              <WeatherIcon code={props.data.icon} size={52} />
             </div>
-            <div className="row">
-              <div className="col-6">
-                <div className="overview">
-                  <h1>{weatherData.city}</h1>
-                  <ul>
-                    <li>
-                      <span>
-                        <FormattedDate date={weatherData.date} />
-                      </span>
-                    </li>
-                    <li>{weatherData.description}</li>
-                  </ul>
-                </div>
-              </div>
-              <div className="col-6">
-                <form onSubmit={handleSubmit}>
-                  <input
-                    type="search"
-                    placeholder="Type a city..."
-                    className="form-control"
-                    autoComplete="off"
-                    autoFocus="on"
-                    onChange={handleCityChange}
-                  />
-                  <input
-                    type="submit"
-                    value="Search"
-                    className="btn btn-bd-primary bi-balloon-heart"
-                  />
-                </form>
-              </div>
+            <div>
+              <WeatherTemperature fahrenheit={props.data.temperature} />
             </div>
-            <WeatherForecast
-              data={weatherData}
-              coordinates={weatherData.coordinates}
-            />
           </div>
         </div>
       </div>
-    );
-  } else {
-    search();
-    return "Today is";
-  }
+    </div>
+  );
 }
